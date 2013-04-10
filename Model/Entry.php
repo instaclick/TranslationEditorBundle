@@ -47,6 +47,7 @@ abstract class Entry implements EntryInterface
      */
     public function __construct()
     {
+        $this->format = 'xlf';
         $this->translations = new ArrayCollection();
     }
 
