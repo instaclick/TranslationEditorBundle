@@ -23,5 +23,9 @@ class ServerGroveTranslationEditorExtension extends \Symfony\Component\HttpKerne
 
         $container->setParameter($this->getAlias() . '.storage.type', $config['storage']['type']);
         $container->setParameter($this->getAlias() . '.storage.manager', $config['storage']['manager']);
+
+        if ($config['use_translator'] == true) {
+            $loader->load('translator.xml');
+        }
     }
 }
