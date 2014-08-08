@@ -2,6 +2,9 @@
 
 namespace ServerGrove\Bundle\TranslationEditorBundle\Storage;
 
+use ServerGrove\Bundle\TranslationEditorBundle\Document\Entry;
+use ServerGrove\Bundle\TranslationEditorBundle\Document\Locale;
+
 /**
  * Doctrine MongoDB Storage
  *
@@ -68,13 +71,15 @@ class MongoDBStorage extends AbstractStorage implements StorageInterface
     {
         $builder = $this->manager->createQueryBuilder($this->getTranslationClassName());
 
-        if(isset($criteria['locale']) && $criteria['locale'] instanceof \ServerGrove\Bundle\TranslationEditorBundle\Document\Locale) {
-            $criteria['locale'] = $criteria['locale']->getId();
+        if (isset($criteria['locale']) && $criteria['locale'] instanceof Locale) {
+            $criteria['locale.id'] = $criteria['locale']->getId();
+            unset($criteria['locale']);
         }
-        if(isset($criteria['entry']) && $criteria['entry'] instanceof \ServerGrove\Bundle\TranslationEditorBundle\Document\Entry) {
-            $criteria['entry'] = $criteria['entry']->getId();
+        if (isset($criteria['entry']) && $criteria['entry'] instanceof Entry) {
+            $criteria['entry.id'] = $criteria['entry']->getId();
+            unset($criteria['entry']);
         }
-        
+
         $this->hydrateCriteria($builder, $criteria);
 
         return iterator_to_array($builder->getQuery()->execute());
@@ -89,7 +94,7 @@ class MongoDBStorage extends AbstractStorage implements StorageInterface
     protected function hydrateCriteria($builder, array $criteria = array())
     {
         foreach ($criteria as $fieldName => $fieldValue) {
-            $builder->addOr($builder->expr()->field($fieldName)->equals($fieldValue));
+            $builder->field($fieldName)->equals($fieldValue);
         }
     }
 }

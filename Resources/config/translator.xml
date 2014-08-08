@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service id="server_grove_translation_editor.translation.generator" class="ServerGrove\Bundle\TranslationEditorBundle\Generator\TranslationGenerator">
+            <argument type="service" id="server_grove_translation_editor.storage"/>
+            <argument type="service" id="avro_translator.translator"/>
+        </service>
+
+      </services>
+</container>

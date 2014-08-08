@@ -16,6 +16,12 @@ Import translation files into MongoDB. If no files is specified, the command wil
 
 Export translations to translation files from MongoDB. If no files is specified, the command will search for files in translations directories in src/
 
+* Generate new translation files
+
+	./app/console locale:editor:generate
+
+Automatically generate translation files for a new locale using Microsoft Translator. Requires AvroTranslatorBundle.
+
 
 ## Screenshot
 
@@ -75,6 +81,12 @@ Doctrine MongoDB configuration (in your config_dev.yml):
         type: server_grove_translation_editor.storage.mongodb
         manager: doctrine_mongodb.odm.document_manager
 
+Enable the generator with the following configuration. 
+
+    server_grove_translation_editor:
+        use_translator: true
+  
+
 Add the routing configuration to app/config/routing_dev.yml
 
 	SGTranslationEditorBundle:
@@ -94,6 +106,10 @@ Add the routing configuration to app/config/routing_dev.yml
 3. Export changes to translation files
 
 	./app/console locale:editor:export
+
+3. Generate translations from an existing locale to a new locale
+
+	./app/console locale:editor:generate
 
 ## WARNING
 
