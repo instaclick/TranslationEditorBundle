@@ -42,7 +42,7 @@ abstract class AbstractCommand extends ContainerAwareCommand
             return array($kernel->getBundle($filterBundleName));
         }
 
-        $sourcePath = realpath($kernel->getRootDir() . '/../src');
+        $sourcePath = realpath($this->getContainer()->getParameter('server_grove_translation_editor.root_dir'));
 
         // Filter non-application bundles
         $bundleList = array_filter(
